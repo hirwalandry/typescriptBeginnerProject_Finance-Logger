@@ -5,6 +5,7 @@ export class Payment{
     //   amount: number;
   
     constructor(
+      private uid: number,
       readonly recipient: string,
       private details: string,
       public amount: number

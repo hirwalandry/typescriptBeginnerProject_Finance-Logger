@@ -6,40 +6,96 @@ export class ListTemplate {
     item: HasFormatter,
     heading: string,
     pos: "start" | "end",
+    update: string,
     remove: string
   ) {
+    //divWrapper
+    const divWrapper = document.querySelector(".wrapper");
     //inputs
     let toFrom = document.querySelector("#toFrom") as HTMLInputElement;
     let details = document.querySelector("#details") as HTMLInputElement;
     let amount = document.querySelector("#amount") as HTMLInputElement;
 
     // create list item
-    const li = document.createElement("li");
+    let li = document.createElement("li");
+
+    //divList_parent
     let divList = document.createElement("div");
     divList.className = "divList";
     li.append(divList);
+    //divHeaderPar
     let divHeaderPar = document.createElement("div");
     divHeaderPar.className = "divHeaderPar";
     divList.append(divHeaderPar);
-    const h4 = document.createElement("h4");
+    let h4 = document.createElement("h4");
+
     h4.innerText = heading;
     divHeaderPar.append(h4);
-    const p = document.createElement("p");
+    let p = document.createElement("p");
+    p.id = "message"
     p.innerText = item.format();
     divHeaderPar.append(p);
+    //divButton
     let divButton = document.createElement("div");
     divButton.className = "divButton";
     divList.append(divButton);
-    const button = document.createElement("button");
-    button.type = "submit";
-    button.onclick = () => {
+    let updateButton = document.createElement("button");
+    updateButton.type = "submit";
+    updateButton.id = "updateButton";
+
+    updateButton.onclick = () => {
+      if (updateButton.innerText == "Done") {
+        updateButton.innerText = update;
+   
+        const inputValue = document.getElementsByTagName("input")[0].value
+        const inputValue1 = document.getElementsByTagName("input")[1].value
+        
+        h4.innerText = inputValue;
+        p.innerText = inputValue1
+        divHeaderPar.replaceChild(h4, divHeaderPar.childNodes[0]);
+        divHeaderPar.replaceChild(p, divHeaderPar.childNodes[1]);
+      
+       
+      } else {
+        updateButton.innerText = "Done";
+        const textMessage = divHeaderPar.childNodes[0].textContent!
+        const pMessage = divHeaderPar.childNodes[1].textContent!
+        let input = document.createElement("input");
+        input.type = "text";
+        input.placeholder = "enter invoice";
+        input.id = "input1"
+        input.value = textMessage;
+        let input2 = document.createElement("input");
+        input2.type = "text";
+        input2.id = "input2"
+        input2.placeholder = "enter invoice";
+        input2.value = pMessage;
+
+        divHeaderPar.replaceChild(input, divHeaderPar.childNodes[0]);
+        divHeaderPar.replaceChild(input2, divHeaderPar.childNodes[1])
+      }
+    };
+    updateButton.innerText = update;
+    divButton.append(updateButton);
+    const removeButton = document.createElement("button");
+    removeButton.type = "submit";
+    removeButton.id = "removeButton";
+    removeButton.onclick = () => {
       li.remove();
       toFrom.value = "";
       details.value = "";
       amount.value = "";
+
+      if (this.container.childElementCount <= 0) {
+        const h3 = document.createElement("h3");
+
+        h3.innerText = "Nothing is here, Please add finance logger!";
+        h3.className = "textOne";
+        divWrapper?.append(h3);
+      }
     };
-    button.innerText = remove;
-    divButton.append(button);
+    removeButton.innerText = remove;
+    divButton.append(removeButton);
 
     if (pos === "start") {
       this.container.prepend(li);

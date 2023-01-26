@@ -2,7 +2,8 @@ export class Invoice {
     //   client: string;
     //   details: string;
     //   amount: number;
-    constructor(client, details, amount) {
+    constructor(uid, client, details, amount) {
+        this.uid = uid;
         this.client = client;
         this.details = details;
         this.amount = amount;

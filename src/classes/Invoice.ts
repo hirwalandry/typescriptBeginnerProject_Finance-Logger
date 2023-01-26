@@ -5,6 +5,7 @@ export class Invoice implements HasFormatter{
     //   amount: number;
   
     constructor(
+      private uid: number,
       readonly client: string,
       private details: string,
       public amount: number
