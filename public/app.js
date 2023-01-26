@@ -7,6 +7,8 @@ let anchor = document.querySelector("a");
 console.log(anchor);
 let form = document.querySelector("form");
 console.log(form);
+//divWrapper
+const divWrapper = document.querySelector(".wrapper");
 //typecasting
 let selectType = document.querySelector("#type");
 let toFrom = document.querySelector("#toFrom");
@@ -17,8 +19,10 @@ let ul = document.querySelector("ul");
 const listItem = new ListTemplate(ul);
 form === null || form === void 0 ? void 0 : form.addEventListener("submit", (e) => {
     e.preventDefault();
+    let uid;
+    uid = Math.floor(Math.random() * 100);
     let values;
-    values = [toFrom.value, details.value, amount.valueAsNumber];
+    values = [uid, toFrom.value, details.value, amount.valueAsNumber];
     let doc;
     if (selectType.value === "invoice") {
         doc = new Invoice(...values);
@@ -26,16 +30,11 @@ form === null || form === void 0 ? void 0 : form.addEventListener("submit", (e) 
     else {
         doc = new Payment(...values);
     }
-    listItem.render(doc, selectType.value, "end", "remove");
-});
-//classes
-let invoices = [];
-let invOne = new Invoice("nshuti", "work on nshuti project", 300);
-let invTwo = new Invoice("landry", "work on landry project", 200);
-invoices.push(invOne);
-invoices.push(invTwo);
-invoices.forEach((inv) => {
-    console.log(inv.client, inv.amount, inv.format());
+    listItem.render(doc, selectType.value, "end", "update", "remove");
+    if ((divWrapper === null || divWrapper === void 0 ? void 0 : divWrapper.children[2]) &&
+        (divWrapper === null || divWrapper === void 0 ? void 0 : divWrapper.children[2].className) == "textOne") {
+        divWrapper === null || divWrapper === void 0 ? void 0 : divWrapper.children[2].remove();
+    }
 });
 const me = {
     name: "landry",
@@ -48,7 +47,6 @@ const me = {
         return amount;
     },
 };
-console.log(me);
 // interfaces with classes
 // let docOne: HasFormatter;
 // let docTwo: HasFormatter;

@@ -3,7 +3,8 @@ export class Payment {
     //   client: string;
     //   details: string;
     //   amount: number;
-    constructor(recipient, details, amount) {
+    constructor(uid, recipient, details, amount) {
+        this.uid = uid;
         this.recipient = recipient;
         this.details = details;
         this.amount = amount;
